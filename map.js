@@ -8,24 +8,34 @@ function isMonster(char) {
 
 function Map() {
     this.map = [
-    ['*', ' ', ' ', ' ', ' '],
-    ['*', ' ', ' ', ' ', ' '],
-    ['*', ' ', ' ', ' ', ' '],
-    ['*', ' ', ' ', ' ', ' '],
-    ['*', ' ', ' ', '1', ' '],
-    ['*', ' ', ' ', ' ', ' ']];
-
+        ['*', ' ', ' ', ' ', ' '],
+        ['*', ' ', ' ', ' ', ' '],
+        ['*', ' ', ' ', ' ', ' '],
+        ['*', ' ', ' ', ' ', ' '],
+        ['*', ' ', ' ', ' ', ' '],
+        ['*', ' ', ' ', ' ', ' ']];
     this.characters = {};
+
+    // for (var r in this.map) {
+    //     for (var c in this.map[r]) {
+    //         var char = this.map[r][c];
+    //         if (char != WALL && char != EMPTY) {
+    //             console.log(r, c);
+    //             this.characters[char] = {x: r, y: c};
+    //         }
+    //     }
+    // }
+
     this.moves = {};
 
     this.setCharacter = function(char, x, y, moves) {
         if (this.characters[char] != undefined) {
-            current_x = this.characters[char][0];
-            current_y = this.characters[char][1];
+            current_x = this.characters[char].x;
+            current_y = this.characters[char].y;
             this.map[current_y][current_x] = EMPTY;
         }
         this.map[y][x] = char;
-        this.characters[char] = [x, y];
+        this.characters[char] = {"x": x, "y": y};
         this.moves[char] = moves;
     }
 
@@ -49,46 +59,41 @@ function Map() {
         return this.moves[char];
     }
 
-    function moveCharacter(char, dir) {
-    // get the character's position
-    pos = map.getCharacter(character);
-    x = pos.x;
-    y = pos.y;
+    this.getMap = function() {
+        return this.map.slice();
+    }
 
-    // get the map size
-    size = map.getSize();
-    maxX = size.x;
-    maxY = size.y;
+    this.moveCharacter = function(char, dir) {
+        // get the character's position
+        var pos = this.getCharacterPosition(char);
+        x = pos.x;
+        y = pos.y;
 
-    // update the map with new position
-    if (dir == "r")
-    {
-    if (map[x+1][y] != "*" && x+1 < maxX)
-    {
-    map[x+1][y] = character;
-    }
-    }
-    else if (dir == "l")
-    {
-    if (map[x-1][y] != "*" && x-1 >= 0)
-    {
-    map[x-1][y] = character;
-    }
-    }
-    else if (dir == "u")
-    {
-    if (map[x][y-1] != "*" && y+1 < maxY)
-    {
-    map[x][y-1] = character;
-    }
-    }
-    else if (dir == "d")
-    {
-    if (map[x][y+1] != "*" && y-1 >= 0)
-    {
-    map[x][y+1] = character;
-    }
-    }
-    return map;
+        // get the this.map size
+        var size = this.getSize();
+        maxX = size[0];
+        maxY = size[1];
+
+        // update the this.map with new position
+        if (dir == "r") {
+            if (this.map[x+1][y] != "*" && x+1 < maxX) {
+                this.setCharacter(char, x+1, y);
+            }
+        }
+        else if (dir == "l") {
+            if (this.map[x-1][y] != "*" && x-1 >= 0) {
+                this.setCharacter(char, x-1, y);
+            }
+        }
+        else if (dir == "u") {
+            if (this.map[x][y-1] != "*" && y+1 < maxY) {
+                this.setCharacter(char, x, y-1);
+            }
+        }
+        else if (dir == "d") {
+            if (this.map[x][y+1] != "*" && y-1 >= 0) {
+                this.setCharacter(char, x, y+1);
+            }
+        }
     }
 };
