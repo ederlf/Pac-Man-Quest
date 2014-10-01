@@ -60,7 +60,6 @@ $(document).ready(function(e) {
   pacman_position = board_provider.getCharacterPosition(PACMAN);
   monster_position = board_provider.getCharacterPosition(MONSTER);
   monster_mv = board_provider.getCharacterMoves(MONSTER);
-  console.log(monster_mv);
 
   //draw board
   paint();

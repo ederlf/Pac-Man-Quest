@@ -31,15 +31,18 @@ QUnit.test("test pacman move", function( assert ) {
     var after = [
     ['*', ' ', ' ', ' ', ' '],
     ['*', ' ', ' ', ' ', ' '],
-    ['*', ' ', 'P', ' ', ' '],
     ['*', ' ', ' ', ' ', ' '],
+    ['*', 'P', ' ', ' ', ' '],
     ['*', ' ', ' ', '1', ' '],
     ['*', ' ', ' ', ' ', ' ']];
 
     var m = new Map();
-    m.setCharacter('P', 2, 1);
+
+    m.setCharacter('P', 1, 2);
     m.setCharacter('1', 3, 4);
-    
+
+    // alert(m.getPosition(2, 1));
+
     m.moveCharacter('P', "d");
     assert.deepEqual(m.getMap(), after, "Passed!" );
 });
